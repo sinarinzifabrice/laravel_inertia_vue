@@ -6,6 +6,7 @@ import '../css/app.css';
 import { createApp, h } from 'vue'
 // Main Inertia function to initialize client-side routing
 import { createInertiaApp } from '@inertiajs/vue3'
+import Layout from './Layouts/Layout.vue';
 
 // Initialize the Inertia application
 createInertiaApp({
@@ -13,7 +14,12 @@ createInertiaApp({
     resolve: name => {
         // Dynamically import all .vue files located in the Pages directory
         const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
-        return pages[`./Pages/${name}.vue`]
+        // Get the page component
+        let page = pages[`./Pages/${name}.vue`];
+
+        // Use global Layout as default if the page doesn't define its own
+        page.default.layout = page.default.layout || Layout;
+        return page;
     },
     // Setup the Vue instance using the component resolved by Inertia
     setup({ el, App, props, plugin }) {
