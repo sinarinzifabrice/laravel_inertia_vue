@@ -1,7 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
+// Main route returning the 'Home' Vue component via Inertia instead of a Blade view
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('Home');
 });
+
+
