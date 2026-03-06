@@ -3,10 +3,13 @@ import './bootstrap';
 import '../css/app.css';
 
 // Core Vue functions to create the app and render HTML
-import { createApp, h } from 'vue'
+import { createApp, h } from 'vue';
 // Main Inertia function to initialize client-side routing
-import { createInertiaApp, Head, Link } from '@inertiajs/vue3'
+import { createInertiaApp, Head, Link } from '@inertiajs/vue3';
+// Import ZiggyVue to use Laravel's named routes in Vue components
+import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import Layout from './Layouts/Layout.vue';
+
 
 // Initialize the Inertia application
 createInertiaApp({
@@ -26,6 +29,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(ZiggyVue)
             // Register global components to make them available in all pages without manual imports
             .component('Head', Head)
             .component('Link', Link)

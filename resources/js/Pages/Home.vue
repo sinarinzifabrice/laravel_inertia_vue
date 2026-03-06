@@ -15,5 +15,10 @@ defineOptions({
     <div>
         <!-- Display the shared user name from HandleInertiaRequests middleware -->
         <h1>{{$page.props.auth.user}}</h1>
+        <!-- 
+            Link to refresh the page. 
+            The 'preserve-scroll' attribute keeps the scroll position after the request.
+        -->
+        <Link class="mt-[600px] block" href="/" preserve-scroll> Refresh</Link>
     </div>
 </template>
