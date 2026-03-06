@@ -31,4 +31,7 @@ createInertiaApp({
             .component('Link', Link)
             .mount(el)
     },
+    progress: {
+        color: '#fdfdfdff', // Default progress bar color (gray-600)
+    },
 })
