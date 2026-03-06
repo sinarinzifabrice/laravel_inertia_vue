@@ -5,11 +5,12 @@ import '../css/app.css';
 // Core Vue functions to create the app and render HTML
 import { createApp, h } from 'vue'
 // Main Inertia function to initialize client-side routing
-import { createInertiaApp } from '@inertiajs/vue3'
+import { createInertiaApp, Head, Link } from '@inertiajs/vue3'
 import Layout from './Layouts/Layout.vue';
 
 // Initialize the Inertia application
 createInertiaApp({
+    title: (title) => `My App${title}`,
     // The resolve method dynamically loads the correct Vue component based on the Laravel route
     resolve: name => {
         // Dynamically import all .vue files located in the Pages directory
@@ -25,6 +26,9 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            // Register global components to make them available in all pages without manual imports
+            .component('Head', Head)
+            .component('Link', Link)
             .mount(el)
     },
 })

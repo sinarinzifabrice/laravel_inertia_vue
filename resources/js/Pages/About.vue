@@ -1,12 +1,14 @@
-
 <script setup>
+/**
+ * Define the properties passed from the Laravel controller
+ */
 defineProps({
-    
-    user : String
+    user : String // The name of the user to display
 })
 
 </script>
 <template>
+    <Head title=" | About" />
     <div>
         <h1>About page {{ user }}</h1>
     </div>
