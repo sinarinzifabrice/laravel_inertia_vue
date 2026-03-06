@@ -5,7 +5,7 @@ use Inertia\Inertia;
 
 // Main route returning the 'Home' Vue component via Inertia instead of a Blade view
 Route::get('/', function () {
-    sleep(2);
+    
     return Inertia::render('Home');
 });
 

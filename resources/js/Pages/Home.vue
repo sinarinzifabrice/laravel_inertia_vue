@@ -10,8 +10,10 @@ defineOptions({
 
 
 <template>
-    <Head title=" |Home" />
+    <!-- Dynamic head title using the component name -->
+    <Head :title= "` | ${$page.component}`" />
     <div>
-        <h1>Hello</h1>
+        <!-- Display the shared user name from HandleInertiaRequests middleware -->
+        <h1>{{$page.props.auth.user}}</h1>
     </div>
 </template>

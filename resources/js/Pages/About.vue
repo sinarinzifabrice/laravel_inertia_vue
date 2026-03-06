@@ -8,8 +8,9 @@ defineProps({
 
 </script>
 <template>
-    <Head title=" | About" />
+    <!-- Dynamic head title using the component name -->
+    <Head :title= "` | ${$page.component}`" /> 
     <div>
-        <h1>About page {{ user }}</h1>
+        <h1>About </h1>
     </div>
 </template> 

@@ -37,7 +37,8 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            //
+            // Pass the authenticated user to every Inertia page
+            'auth.user' => 'John Doe',
         ];
     }
 }
