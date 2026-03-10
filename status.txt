@@ -1,0 +1,13 @@
+﻿ M app/Models/User.php
+ M composer.json
+ M composer.lock
+ M resources/css/app.css
+ M resources/js/Layouts/Layout.vue
+ D resources/js/Pages/About.vue
+AM resources/js/Pages/Auth/Register.vue
+M  resources/js/Pages/Home.vue
+ M routes/web.php
+?? _ide_helper_models.php
+?? diff.txt
+?? status.txt
+?? storage/debugbar/

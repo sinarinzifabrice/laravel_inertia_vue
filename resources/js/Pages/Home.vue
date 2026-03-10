@@ -13,12 +13,8 @@ defineOptions({
     <!-- Dynamic head title using the component name -->
     <Head :title= "` | ${$page.component}`" />
     <div>
-        <!-- Display the shared user name from HandleInertiaRequests middleware -->
-        <h1>{{$page.props.auth.user}}</h1>
-        <!-- 
-            Link to refresh the page. 
-            The 'preserve-scroll' attribute keeps the scroll position after the request.
-        -->
-        <Link class="mt-[600px] block" href="/" preserve-scroll> Refresh</Link>
+        <!-- Main homepage content -->
+        <h1>Home page</h1>
+        
     </div>
 </template>

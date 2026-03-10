@@ -1,0 +1,786 @@
+﻿diff --git a/app/Models/User.php b/app/Models/User.php
+index 749c7b7..c3239a9 100644
+--- a/app/Models/User.php
++++ b/app/Models/User.php
+@@ -7,6 +7,9 @@
+ use Illuminate\Foundation\Auth\User as Authenticatable;
+ use Illuminate\Notifications\Notifiable;
+ 
++/**
++ * @mixin IdeHelperUser
++ */
+ class User extends Authenticatable
+ {
+     /** @use HasFactory<\Database\Factories\UserFactory> */
+diff --git a/composer.json b/composer.json
+index 1307c9e..6787171 100644
+--- a/composer.json
++++ b/composer.json
+@@ -13,7 +13,9 @@
+         "tightenco/ziggy": "^2.6"
+     },
+     "require-dev": {
++        "barryvdh/laravel-ide-helper": "^3.6",
+         "fakerphp/faker": "^1.23",
++        "fruitcake/laravel-debugbar": "^4.1",
+         "laravel/pail": "^1.1",
+         "laravel/pint": "^1.13",
+         "laravel/sail": "^1.26",
+diff --git a/composer.lock b/composer.lock
+index 073c7c3..7f4b0e3 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "e38dd8ca8991cff16d4a174b4af7a73a",
++    "content-hash": "1215d38a91565367613ab2ddf0fee03a",
+     "packages": [
+         {
+             "name": "brick/math",
+@@ -6054,6 +6054,300 @@
+         }
+     ],
+     "packages-dev": [
++        {
++            "name": "barryvdh/laravel-ide-helper",
++            "version": "v3.6.1",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/barryvdh/laravel-ide-helper.git",
++                "reference": "b106f7ee85f263c4f103eca49e7bf3862c2e5e75"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/b106f7ee85f263c4f103eca49e7bf3862c2e5e75",
++                "reference": "b106f7ee85f263c4f103eca49e7bf3862c2e5e75",
++                "shasum": ""
++            },
++            "require": {
++                "barryvdh/reflection-docblock": "^2.4",
++                "composer/class-map-generator": "^1.0",
++                "ext-json": "*",
++                "illuminate/console": "^11.15 || ^12",
++                "illuminate/database": "^11.15 || ^12",
++                "illuminate/filesystem": "^11.15 || ^12",
++                "illuminate/support": "^11.15 || ^12",
++                "php": "^8.2"
++            },
++            "require-dev": {
++                "ext-pdo_sqlite": "*",
++                "friendsofphp/php-cs-fixer": "^3",
++                "illuminate/config": "^11.15 || ^12",
++                "illuminate/view": "^11.15 || ^12",
++                "mockery/mockery": "^1.4",
++                "orchestra/testbench": "^9.2 || ^10",
++                "phpunit/phpunit": "^10.5 || ^11.5.3",
++                "spatie/phpunit-snapshot-assertions": "^4 || ^5",
++                "vimeo/psalm": "^5.4",
++                "vlucas/phpdotenv": "^5"
++            },
++            "suggest": {
++                "illuminate/events": "Required for automatic helper generation (^6|^7|^8|^9|^10|^11)."
++            },
++            "type": "library",
++            "extra": {
++                "laravel": {
++                    "providers": [
++                        "Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider"
++                    ]
++                },
++                "branch-alias": {
++                    "dev-master": "3.5-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Barryvdh\\LaravelIdeHelper\\": "src"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Barry vd. Heuvel",
++                    "email": "barryvdh@gmail.com"
++                }
++            ],
++            "description": "Laravel IDE Helper, generates correct PHPDocs for all Facade classes, to improve auto-completion.",
++            "keywords": [
++                "autocomplete",
++                "codeintel",
++                "dev",
++                "helper",
++                "ide",
++                "laravel",
++                "netbeans",
++                "phpdoc",
++                "phpstorm",
++                "sublime"
++            ],
++            "support": {
++                "issues": "https://github.com/barryvdh/laravel-ide-helper/issues",
++                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/v3.6.1"
++            },
++            "funding": [
++                {
++                    "url": "https://fruitcake.nl",
++                    "type": "custom"
++                },
++                {
++                    "url": "https://github.com/barryvdh",
++                    "type": "github"
++                }
++            ],
++            "time": "2025-12-10T09:11:07+00:00"
++        },
++        {
++            "name": "barryvdh/reflection-docblock",
++            "version": "v2.4.1",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/barryvdh/ReflectionDocBlock.git",
++                "reference": "4f5ba70c30c81f2ce03a16a9965832cfcc31ed3b"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/barryvdh/ReflectionDocBlock/zipball/4f5ba70c30c81f2ce03a16a9965832cfcc31ed3b",
++                "reference": "4f5ba70c30c81f2ce03a16a9965832cfcc31ed3b",
++                "shasum": ""
++            },
++            "require": {
++                "php": ">=7.1"
++            },
++            "require-dev": {
++                "phpunit/phpunit": "^8.5.14|^9"
++            },
++            "suggest": {
++                "dflydev/markdown": "~1.0",
++                "erusev/parsedown": "~1.0"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "2.3.x-dev"
++                }
++            },
++            "autoload": {
++                "psr-0": {
++                    "Barryvdh": [
++                        "src/"
++                    ]
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Mike van Riel",
++                    "email": "mike.vanriel@naenius.com"
++                }
++            ],
++            "support": {
++                "source": "https://github.com/barryvdh/ReflectionDocBlock/tree/v2.4.1"
++            },
++            "time": "2026-03-05T20:09:01+00:00"
++        },
++        {
++            "name": "composer/class-map-generator",
++            "version": "1.7.1",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/composer/class-map-generator.git",
++                "reference": "8f5fa3cc214230e71f54924bd0197a3bcc705eb1"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/composer/class-map-generator/zipball/8f5fa3cc214230e71f54924bd0197a3bcc705eb1",
++                "reference": "8f5fa3cc214230e71f54924bd0197a3bcc705eb1",
++                "shasum": ""
++            },
++            "require": {
++                "composer/pcre": "^2.1 || ^3.1",
++                "php": "^7.2 || ^8.0",
++                "symfony/finder": "^4.4 || ^5.3 || ^6 || ^7 || ^8"
++            },
++            "require-dev": {
++                "phpstan/phpstan": "^1.12 || ^2",
++                "phpstan/phpstan-deprecation-rules": "^1 || ^2",
++                "phpstan/phpstan-phpunit": "^1 || ^2",
++                "phpstan/phpstan-strict-rules": "^1.1 || ^2",
++                "phpunit/phpunit": "^8",
++                "symfony/filesystem": "^5.4 || ^6 || ^7 || ^8"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-main": "1.x-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Composer\\ClassMapGenerator\\": "src"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Jordi Boggiano",
++                    "email": "j.boggiano@seld.be",
++                    "homepage": "https://seld.be"
++                }
++            ],
++            "description": "Utilities to scan PHP code and generate class maps.",
++            "keywords": [
++                "classmap"
++            ],
++            "support": {
++                "issues": "https://github.com/composer/class-map-generator/issues",
++                "source": "https://github.com/composer/class-map-generator/tree/1.7.1"
++            },
++            "funding": [
++                {
++                    "url": "https://packagist.com",
++                    "type": "custom"
++                },
++                {
++                    "url": "https://github.com/composer",
++                    "type": "github"
++                }
++            ],
++            "time": "2025-12-29T13:15:25+00:00"
++        },
++        {
++            "name": "composer/pcre",
++            "version": "3.3.2",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/composer/pcre.git",
++                "reference": "b2bed4734f0cc156ee1fe9c0da2550420d99a21e"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/composer/pcre/zipball/b2bed4734f0cc156ee1fe9c0da2550420d99a21e",
++                "reference": "b2bed4734f0cc156ee1fe9c0da2550420d99a21e",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^7.4 || ^8.0"
++            },
++            "conflict": {
++                "phpstan/phpstan": "<1.11.10"
++            },
++            "require-dev": {
++                "phpstan/phpstan": "^1.12 || ^2",
++                "phpstan/phpstan-strict-rules": "^1 || ^2",
++                "phpunit/phpunit": "^8 || ^9"
++            },
++            "type": "library",
++            "extra": {
++                "phpstan": {
++                    "includes": [
++                        "extension.neon"
++                    ]
++                },
++                "branch-alias": {
++                    "dev-main": "3.x-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Composer\\Pcre\\": "src"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Jordi Boggiano",
++                    "email": "j.boggiano@seld.be",
++                    "homepage": "http://seld.be"
++                }
++            ],
++            "description": "PCRE wrapping library that offers type-safe preg_* replacements.",
++            "keywords": [
++                "PCRE",
++                "preg",
++                "regex",
++                "regular expression"
++            ],
++            "support": {
++                "issues": "https://github.com/composer/pcre/issues",
++                "source": "https://github.com/composer/pcre/tree/3.3.2"
++            },
++            "funding": [
++                {
++                    "url": "https://packagist.com",
++                    "type": "custom"
++                },
++                {
++                    "url": "https://github.com/composer",
++                    "type": "github"
++                },
++                {
++                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
++                    "type": "tidelift"
++                }
++            ],
++            "time": "2024-11-12T16:29:46+00:00"
++        },
+         {
+             "name": "fakerphp/faker",
+             "version": "v1.24.1",
+@@ -6188,6 +6482,108 @@
+             ],
+             "time": "2025-08-08T12:00:00+00:00"
+         },
++        {
++            "name": "fruitcake/laravel-debugbar",
++            "version": "v4.1.3",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/fruitcake/laravel-debugbar.git",
++                "reference": "b48a68c4f8ffcdfa3a10d49930da4b03588dc87b"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/fruitcake/laravel-debugbar/zipball/b48a68c4f8ffcdfa3a10d49930da4b03588dc87b",
++                "reference": "b48a68c4f8ffcdfa3a10d49930da4b03588dc87b",
++                "shasum": ""
++            },
++            "require": {
++                "illuminate/routing": "^11|^12|^13.0",
++                "illuminate/session": "^11|^12|^13.0",
++                "illuminate/support": "^11|^12|^13.0",
++                "php": "^8.2",
++                "php-debugbar/php-debugbar": "^3.5",
++                "php-debugbar/symfony-bridge": "^1.1"
++            },
++            "replace": {
++                "barryvdh/laravel-debugbar": "self.version"
++            },
++            "require-dev": {
++                "larastan/larastan": "^3",
++                "laravel/octane": "^2",
++                "laravel/pennant": "^1",
++                "laravel/pint": "^1",
++                "laravel/telescope": "^5.16",
++                "livewire/livewire": "^3.7|^4",
++                "mockery/mockery": "^1.3.3",
++                "orchestra/testbench-dusk": "^9|^10|^11",
++                "php-debugbar/twig-bridge": "^2.0",
++                "phpstan/phpstan-phpunit": "^2",
++                "phpstan/phpstan-strict-rules": "^2.0",
++                "phpunit/phpunit": "^11",
++                "shipmonk/phpstan-rules": "^4.3"
++            },
++            "type": "library",
++            "extra": {
++                "laravel": {
++                    "aliases": {
++                        "Debugbar": "Fruitcake\\LaravelDebugbar\\Facades\\Debugbar"
++                    },
++                    "providers": [
++                        "Fruitcake\\LaravelDebugbar\\ServiceProvider"
++                    ]
++                },
++                "branch-alias": {
++                    "dev-master": "4.1-dev"
++                }
++            },
++            "autoload": {
++                "files": [
++                    "src/helpers.php"
++                ],
++                "psr-4": {
++                    "Fruitcake\\LaravelDebugbar\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Fruitcake",
++                    "homepage": "https://fruitcake.nl"
++                },
++                {
++                    "name": "Barry vd. Heuvel",
++                    "email": "barryvdh@gmail.com"
++                }
++            ],
++            "description": "PHP Debugbar integration for Laravel",
++            "keywords": [
++                "barryvdh",
++                "debug",
++                "debugbar",
++                "dev",
++                "laravel",
++                "profiler",
++                "webprofiler"
++            ],
++            "support": {
++                "issues": "https://github.com/fruitcake/laravel-debugbar/issues",
++                "source": "https://github.com/fruitcake/laravel-debugbar/tree/v4.1.3"
++            },
++            "funding": [
++                {
++                    "url": "https://fruitcake.nl",
++                    "type": "custom"
++                },
++                {
++                    "url": "https://github.com/barryvdh",
++                    "type": "github"
++                }
++            ],
++            "time": "2026-03-09T14:55:04+00:00"
++        },
+         {
+             "name": "hamcrest/hamcrest-php",
+             "version": "v2.1.1",
+@@ -6806,6 +7202,174 @@
+             },
+             "time": "2022-02-21T01:04:05+00:00"
+         },
++        {
++            "name": "php-debugbar/php-debugbar",
++            "version": "v3.5.1",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/php-debugbar/php-debugbar.git",
++                "reference": "486b32fd98efe9a3c10f0b24c0caabc187f78f04"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/php-debugbar/php-debugbar/zipball/486b32fd98efe9a3c10f0b24c0caabc187f78f04",
++                "reference": "486b32fd98efe9a3c10f0b24c0caabc187f78f04",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^8.2",
++                "psr/log": "^1|^2|^3",
++                "symfony/var-dumper": "^5.4|^6|^7|^8"
++            },
++            "replace": {
++                "maximebf/debugbar": "self.version"
++            },
++            "require-dev": {
++                "dbrekelmans/bdi": "^1.4",
++                "friendsofphp/php-cs-fixer": "^3.92",
++                "monolog/monolog": "^3.9",
++                "php-debugbar/doctrine-bridge": "^3@dev",
++                "php-debugbar/monolog-bridge": "^1@dev",
++                "php-debugbar/symfony-bridge": "^1@dev",
++                "php-debugbar/twig-bridge": "^2@dev",
++                "phpstan/phpstan": "^2.1",
++                "phpstan/phpstan-phpunit": "^2.0",
++                "phpstan/phpstan-strict-rules": "^2.0",
++                "phpunit/phpunit": "^10",
++                "predis/predis": "^3.3",
++                "shipmonk/phpstan-rules": "^4.3",
++                "symfony/browser-kit": "^6.4|7.0",
++                "symfony/dom-crawler": "^6.4|^7",
++                "symfony/event-dispatcher": "^5.4|^6.4|^7.3|^8.0",
++                "symfony/http-foundation": "^5.4|^6.4|^7.3|^8.0",
++                "symfony/mailer": "^5.4|^6.4|^7.3|^8.0",
++                "symfony/panther": "^1|^2.1",
++                "twig/twig": "^3.11.2"
++            },
++            "suggest": {
++                "php-debugbar/doctrine-bridge": "To integrate Doctrine with php-debugbar.",
++                "php-debugbar/monolog-bridge": "To integrate Monolog with php-debugbar.",
++                "php-debugbar/symfony-bridge": "To integrate Symfony with php-debugbar.",
++                "php-debugbar/twig-bridge": "To integrate Twig with php-debugbar."
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "3.0-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "DebugBar\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Maxime Bouroumeau-Fuseau",
++                    "email": "maxime.bouroumeau@gmail.com",
++                    "homepage": "http://maximebf.com"
++                },
++                {
++                    "name": "Barry vd. Heuvel",
++                    "email": "barryvdh@gmail.com"
++                }
++            ],
++            "description": "Debug bar in the browser for php application",
++            "homepage": "https://github.com/php-debugbar/php-debugbar",
++            "keywords": [
++                "debug",
++                "debug bar",
++                "debugbar",
++                "dev",
++                "profiler",
++                "toolbar"
++            ],
++            "support": {
++                "issues": "https://github.com/php-debugbar/php-debugbar/issues",
++                "source": "https://github.com/php-debugbar/php-debugbar/tree/v3.5.1"
++            },
++            "funding": [
++                {
++                    "url": "https://fruitcake.nl",
++                    "type": "custom"
++                },
++                {
++                    "url": "https://github.com/barryvdh",
++                    "type": "github"
++                }
++            ],
++            "time": "2026-03-05T20:37:33+00:00"
++        },
++        {
++            "name": "php-debugbar/symfony-bridge",
++            "version": "v1.1.0",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/php-debugbar/symfony-bridge.git",
++                "reference": "e37d2debe5d316408b00d0ab2688d9c2cf59b5ad"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/php-debugbar/symfony-bridge/zipball/e37d2debe5d316408b00d0ab2688d9c2cf59b5ad",
++                "reference": "e37d2debe5d316408b00d0ab2688d9c2cf59b5ad",
++                "shasum": ""
++            },
++            "require": {
++                "php": "^8.2",
++                "php-debugbar/php-debugbar": "^3.1",
++                "symfony/http-foundation": "^5.4|^6.4|^7.3|^8.0"
++            },
++            "require-dev": {
++                "dbrekelmans/bdi": "^1.4",
++                "phpunit/phpunit": "^10",
++                "symfony/browser-kit": "^6|^7",
++                "symfony/dom-crawler": "^6|^7",
++                "symfony/mailer": "^5.4|^6.4|^7.3|^8.0",
++                "symfony/panther": "^1|^2.1"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "1.0-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "DebugBar\\Bridge\\Symfony\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Maxime Bouroumeau-Fuseau",
++                    "email": "maxime.bouroumeau@gmail.com",
++                    "homepage": "http://maximebf.com"
++                },
++                {
++                    "name": "Barry vd. Heuvel",
++                    "email": "barryvdh@gmail.com"
++                }
++            ],
++            "description": "Symfony bridge for PHP Debugbar",
++            "homepage": "https://github.com/php-debugbar/php-debugbar",
++            "keywords": [
++                "debugbar",
++                "dev",
++                "symfony"
++            ],
++            "support": {
++                "issues": "https://github.com/php-debugbar/symfony-bridge/issues",
++                "source": "https://github.com/php-debugbar/symfony-bridge/tree/v1.1.0"
++            },
++            "time": "2026-01-15T14:47:34+00:00"
++        },
+         {
+             "name": "phpunit/php-code-coverage",
+             "version": "11.0.12",
+diff --git a/resources/css/app.css b/resources/css/app.css
+index b5c61c9..5ec0184 100644
+--- a/resources/css/app.css
++++ b/resources/css/app.css
+@@ -1,3 +1,72 @@
++/* Please note this document will be updated as time goes by. Thank you */
++
++@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
++
+ @tailwind base;
+ @tailwind components;
+ @tailwind utilities;
++
++@layer base {
++    body {
++        font-family: "Poppins", sans-serif;
++    }
++}
++
++@layer components {
++    input[type="text"],
++    input[type="email"],
++    input[type="password"],
++    input[type="search"],
++    input[type="tel"],
++    input[type="url"], textarea {
++        @apply block w-full rounded-md border-0 p-2 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm bg-white;
++    }
++    label {
++        @apply block text-sm font-medium leading-6 text-slate-900 first-letter:capitalize;
++    }
++    header {
++        @apply bg-slate-800 shadow-md;
++    }
++    nav {
++        @apply p-5 max-w-screen-lg mx-auto flex items-center justify-between;
++    }
++    main {
++        @apply max-w-screen-lg mx-auto;
++    }
++    .primary-btn {
++        @apply flex w-full justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-slate-400 disabled:cursor-wait;
++    }
++    .text-link {
++        @apply font-semibold text-blue-500 hover:text-blue-600;
++    }
++    .nav-link {
++        @apply text-slate-200 hover:bg-slate-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium;
++    }
++    .title {
++        @apply my-6 text-center text-3xl font-bold leading-9 text-slate-900;
++    }
++    .error {
++        @apply text-xs text-red-500 mt-1;
++    }
++    table {
++        @apply w-full text-sm text-left rounded-md shadow-lg overflow-hidden mb-6 table-auto bg-white;
++    }
++    thead {
++        @apply text-xs uppercase font-medium border-b border-slate-100 text-slate-600;
++    }
++    tbody tr {
++        @apply hover:bg-slate-100 w-full p-0;
++    }
++    th {
++        @apply px-6 py-4;
++    }
++    td {
++        @apply px-6 py-4 border-b border-slate-100;
++    }
++    .avatar {
++        @apply w-8 h-8 rounded-full overflow-hidden object-center object-cover;
++    }
++    .round-btn {
++        @apply w-8 h-8 overflow-auto rounded-full bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-100 focus:ring-offset-2 focus:ring-offset-slate-800;
++    }
++}
+diff --git a/resources/js/Layouts/Layout.vue b/resources/js/Layouts/Layout.vue
+index cf9f346..e45640c 100644
+--- a/resources/js/Layouts/Layout.vue
++++ b/resources/js/Layouts/Layout.vue
+@@ -5,12 +5,15 @@ import { Link } from '@inertiajs/vue3';
+ <template>
+     <div class="min-h-screen bg-gray-50 text-gray-900">
+         <!-- Main Header with Navigation -->
+-        <header class="bg-indigo-600 text-white shadow-md">
+-            <nav class="flex justify-between items-center p-4 max-w-screen-lg mx-auto">
++        <header>
++            <nav>
+                 <div class="space-x-6">
+                     <!-- Use Laravel named routes instead of hardcoded paths -->
+-                    <Link :href="route('home')" >Home</Link>
+-                    <Link :href="route('about')">About</Link>
++                    <Link :href="route('home')" class="nav-link">Home</Link>
++                </div>
++                <div class="space-x-6">
++                    <!-- Use Laravel named routes instead of hardcoded paths -->
++                    <Link :href="route('register')" class="nav-link">Register</Link>
+                 </div>
+             </nav>
+         </header>
+diff --git a/resources/js/Pages/About.vue b/resources/js/Pages/About.vue
+deleted file mode 100644
+index c90b148..0000000
+--- a/resources/js/Pages/About.vue
++++ /dev/null
+@@ -1,16 +0,0 @@
+-<script setup>
+-/**
+- * Define the properties passed from the Laravel controller
+- */
+-defineProps({
+-    user : String // The name of the user to display
+-})
+-
+-</script>
+-<template>
+-    <!-- Dynamic head title using the component name -->
+-    <Head :title= "` | ${$page.component}`" /> 
+-    <div>
+-        <h1>About </h1>
+-    </div>
+-</template> 
+\ No newline at end of file
+diff --git a/resources/js/Pages/Auth/Register.vue b/resources/js/Pages/Auth/Register.vue
+index 8a565bb..0e83a54 100644
+--- a/resources/js/Pages/Auth/Register.vue
++++ b/resources/js/Pages/Auth/Register.vue
+@@ -9,7 +9,7 @@ const form = reactive({
+ })
+ 
+ const submit = () => {
+-    console.log("submit"    );
++    console.log(form);
+ }
+ </script>
+ 
+diff --git a/routes/web.php b/routes/web.php
+index 1a27dde..2a7abf0 100644
+--- a/routes/web.php
++++ b/routes/web.php
+@@ -1,14 +1,11 @@
+ <?php
+ 
+ use Illuminate\Support\Facades\Route;
+-use Inertia\Inertia;
++
+ 
+ 
+ // Main route returning the 'Home' Vue component via Inertia
+-Route::get('/', function () {
+-    return Inertia::render('Home');
+-})->name('home'); // Define name for use with route() in JS
++Route::inertia('/', 'Home')->name('home');
+ 
+-// Using Route::inertia shorthand for simple pages
+-Route::inertia('/about','About', ['user' => 'John Doe'])->name('about');
+ 
++Route::inertia('/register', 'Auth/Register')->name('register');
+\ No newline at end of file
