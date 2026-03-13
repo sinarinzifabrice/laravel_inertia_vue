@@ -6,10 +6,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-<<<<<<< Updated upstream
-/**
- * AuthController handles user authentication actions like registration, login, and logout.
- */
 class AuthController extends Controller
 {
     /**
@@ -18,10 +14,6 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-=======
-class AuthController extends Controller
-{
->>>>>>> Stashed changes
     public function register(Request $request)
     {
         sleep(1);
